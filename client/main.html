@@ -1,0 +1,68 @@
+<head>
+    <title>Leaderboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+      
+      <p class="text-right">{{> loginButtons}}</p>
+      
+      <h1>Leaderboard</h1>
+      
+      {{#if currentUser}}
+          {{> addPlayerForm}}
+          {{> leaderboard}}
+      {{else}}
+          <p>You must be logged in to view</p>
+      {{/if}}
+    </div>
+</body>
+
+<template name="leaderboard">
+    
+    <h2>Number of Players: {{playerCount}}</h2>
+       
+    <table class="table table-striped table-bordered">
+      <thead>
+        <td>Player Name</td>
+        <td>Player Score</td>
+      </thead>
+      
+      {{#each player}}
+        <tr>
+          <td class="player {{selectedClass}}">{{name}}</td>
+          <td>{{score}}</td>
+        </tr>
+      {{/each}}
+        
+    </table>
+
+    {{#if selectedPlayer}}
+        <h3>Selected Player: {{selectedPlayer.name}}</h3>
+        
+        <input class="form-control" type="text" name="playerName" id="playerName" value="{{selectedPlayer.name}}"/> 
+        <button class="btn btn-default update">Update Name</button>
+        <button class="btn btn-danger remove">Remove Player</button>
+        
+        <button class="btn btn-success increment">Give 5 Points</button>
+        <button class="btn btn-warning decrement">Take 5 Points</button>
+    {{/if}}
+    
+</template>
+
+<template name="addPlayerForm">
+    <form>
+        <input type="text" name="playerName" placeholder="Name">
+        <input type="number" name="playerScore" placeholder="Score">
+
+        <input type="submit" value="Add Player">
+    </form>
+</template>
+
+<template name="updatePlayerForm">
+    <form>
+        <input type="text" name="playerName">
+        <input type="submit" value="Update Player">
+    </form>
+</template>
